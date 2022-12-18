@@ -1,0 +1,48 @@
+EXERCICE1:
+class Complexe {
+private:
+  double reel;
+  double imaginaire;
+
+public:
+  Complexe(double reel, double imaginaire) : reel(reel), imaginaire(imaginaire) {}
+
+  double getReel() const { return reel; }
+  double getImaginaire() const { return imaginaire; }
+
+  Complexe operator+(const Complexe &other) const {
+    return Complexe(reel + other.reel, imaginaire + other.imaginaire);
+  }
+
+  Complexe operator-(const Complexe &other) const {
+    return Complexe(reel - other.reel, imaginaire - other.imaginaire);
+  }
+
+  Complexe operator*(const Complexe &other) const {
+    return Complexe(reel * other.reel - imaginaire * other.imaginaire,
+                    reel * other.imaginaire + imaginaire * other.reel);
+  }
+
+  Complexe operator/(const Complexe &other) const {
+    double denominateur = other.reel * other.reel + other.imaginaire * other.imaginaire;
+    return Complexe((reel * other.reel + imaginaire * other.imaginaire) / denominateur,
+                    (imaginaire * other.reel - reel * other.imaginaire) / denominateur);
+  }
+};
+
+std::ostream &operator<<(std::ostream &out, const Complexe &c) {
+  out << c.getReel() << " + " << c.getImaginaire() << "i";
+  return out;
+}
+
+int main() {
+  Complexe c1(1, 2);
+  Complexe c2(3, 4);
+
+  std::cout << c1 << " + " << c2 << " = " << c1 + c2 << std::endl;
+  std::cout << c1 << " - " << c2 << " = " << c1 - c2 << std::endl;
+  std::cout << c1 << " * " << c2 << " = " << c1 * c2 << std::endl;
+  std::cout << c1 << " / " << c2 << " = " << c1 / c2 << std::endl;
+
+  return 0;
+}
