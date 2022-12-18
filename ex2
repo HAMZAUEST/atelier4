@@ -1,0 +1,23 @@
+#include <iostream>
+#include <string>
+
+int main() {
+  // Chaîne de caractères contenant la date et l'heure
+  std::string dateTime = "010920091123";
+
+  // Extraire les différents champs de la chaîne de caractères
+  std::string jour = dateTime.substr(0, 2);
+  std::string mois = dateTime.substr(2, 2);
+  std::string annee = dateTime.substr(4, 4);
+  std::string heure = dateTime.substr(8, 2);
+  std::string minute = dateTime.substr(10, 2);
+
+  // Afficher les différents champs
+  std::cout << "Jour : " << jour << std::endl;
+  std::cout << "Mois : " << mois << std::endl;
+  std::cout << "Année : " << annee << std::endl;
+  std::cout << "Heure : " << heure << std::endl;
+  std::cout << "Minute : " << minute << std::endl;
+
+  return 0;
+}
