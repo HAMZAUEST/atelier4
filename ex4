@@ -1,0 +1,38 @@
+#include <iostream>
+#include <string>
+#include <list>
+#include <algorithm>
+
+struct Personne {
+  std::string nom;
+  std::string prenom;
+  int age;
+};
+
+int main() {
+  std::list<Personne> liste;
+
+  // Demander à l'utilisateur d'entrer des personnes
+  std::cout << "Entrez des personnes (appuyez sur Ctrl+D pour terminer) :" << std::endl;
+
+  Personne personne;
+  while (std::cin >> personne.nom >> personne.prenom >> personne.age) {
+    liste.push_back(personne);
+  }
+
+  // Trier la liste selon l'ordre alphabétique des noms et prénoms
+  liste.sort([](const Personne& p1, const Personne& p2) {
+    if (p1.nom != p2.nom) {
+      return p1.nom < p2.nom;
+    }
+    return p1.prenom < p2.prenom;
+  });
+
+  // Afficher la liste triée
+  std::cout << "Liste triée :" << std::endl;
+  for (const Personne& personne : liste) {
+    std::cout << personne.nom << " " << personne.prenom << " " << personne.age << std::endl;
+  }
+
+  return 0;
+}
