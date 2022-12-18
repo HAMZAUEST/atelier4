@@ -1,0 +1,100 @@
+#include <iostream>
+#include <list>
+
+// Fonction de tri à bulles
+void triBulle(std::list<int>& liste) {
+  // Booléen qui indique si il y a eu un échange lors du dernier passage
+  bool echange;
+
+  // Faire une boucle jusqu'à ce qu'il n'y ait plus d'échanges
+  do {
+    // Pas d'échange au début du passage
+    echange = false;
+
+    // Parcourir la liste et échanger les éléments adjacents non-triés
+    for (auto it = liste.begin(); it != liste.end() - 1; ++it) {
+      if (*it > *(it + 1)) {
+        std::swap(*it, *(it + 1));
+        echange = true;
+      }
+    }
+  } while (echange);
+}
+
+// Fonction de tri par sélection
+void triSelection(std::list<int>& liste) {
+  // Parcourir la liste
+  for (auto it = liste.begin(); it != liste.end(); ++it) {
+    // Trouver l'élément minimum de la liste non-triée
+    auto min = it;
+    for (auto jt = it; jt != liste.end(); ++jt) {
+      if (*jt < *min) {
+        min = jt;
+      }
+    }
+
+    // Echanger l'élément courant avec l'élément minimum
+    std::swap(*it, *min);
+  }
+}
+
+// Fonction de tri par insertion
+void triInsertion(std::list<int>& liste) {
+  // Parcourir la liste
+  for (auto it = liste.begin(); it != liste.end(); ++it) {
+    // Trouver l'emplacement où insérer l'élément courant dans la liste triée
+    auto jt = it;
+    while (jt != liste.begin() && *jt < *(jt - 1)) {
+      --jt;
+    }
+
+    // Décaler les éléments pour insérer l'élément courant à sa place
+    int temp = *it;
+    liste.erase(it);
+    liste.insert(jt, temp);
+  }
+}
+
+int main() {
+  std::list<int> liste;
+
+  // Demander à l'utilisateur de saisir des entiers
+  std::cout << "Saisissez des entiers (appuyez sur Ctrl+D pour terminer) :" << std::endl;
+  int x;
+while (std::cin >> x) {
+  liste.push_back(x);
+}
+
+// Demander à l'utilisateur de choisir un algorithme de tri
+std::cout << "Choisissez un algorithme de tri :" << std::endl;
+std::cout << "1 - Tri à bulles" << std::endl;
+std::cout << "2 - Tri par sélection" << std::endl;
+std::cout << "3 - Tri par insertion" << std::endl;
+
+int choix;
+std::cin >> choix;
+
+// Appeler la fonction de tri choisie
+switch (choix) {
+  case 1:
+    triBulle(liste);
+    break;
+  case 2:
+    triSelection(liste);
+    break;
+  case 3:
+    triInsertion(liste);
+    break;
+  default:
+    std::cerr << "Choix de tri non valide" << std::endl;
+    return 1;
+}
+
+// Afficher la liste triée
+std::cout << "Liste triée :" << std::endl;
+for (int x : liste) {
+  std::cout << x << " ";
+}
+std::cout << std::endl;
+
+return 0;
