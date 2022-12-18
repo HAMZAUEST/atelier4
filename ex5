@@ -1,0 +1,49 @@
+#include <iostream>
+#include <set>
+#include <vector>
+#include <list>
+#include <array>
+
+// Créer un set paramètre pour le type int que vous remplirez avec tous les entiers de 1 à 100
+std::set<int> setInt{};
+for (int i = 1; i <= 100; ++i) {
+  setInt.insert(i);
+}
+
+// Fonction de recherche qui renvoie un booléen pour indiquer si une valeur donnée est présente ou non dans un set que vous passerez en paramètre avec la valeur à rechercher
+template <typename T>
+bool estPresent(const T& container, typename T::value_type value) {
+  return container.find(value) != container.end();
+}
+
+// Modifiez cette fonction en lui passant maintenant en paramètres 2 itérateurs de set<int> (début et fin) ainsi que la valeur à rechercher
+template <typename T>
+bool estPresent(typename T::const_iterator begin, typename T::const_iterator end, typename T::value_type value) {
+  return std::find(begin, end, value) != end;
+}
+
+// Passer la fonction en Template de façon à ce qu'elle marche peu importe le type d'itérateur qui lui est fourni (itérateur de liste, de vecteur, d'ensemble, ...)
+template <typename T>
+bool estPresent(typename T::const_iterator begin, typename T::const_iterator end, typename T::value_type value) {
+  return std::find(begin, end, value) != end;
+}
+
+int main() {
+  // Exemple d'appel sur un vecteur de string
+  std::vector<std::string> vectorString{"foo", "bar", "baz"};
+  std::cout << "La valeur 'bar' est-elle présente dans le vecteur de string ? "
+            << std::boolalpha << estPresent(vectorString.cbegin(), vectorString.cend(), "bar") << std::endl;
+
+  // Exemple d'appel sur une liste d'entiers
+  std::list<int> listInt{1, 2, 3, 4, 5};
+  std::cout << "La valeur 3 est-elle présente dans la liste d'entiers ? "
+            << std::boolalpha << estPresent(listInt.cbegin(), listInt.cend(), 3) << std::endl;
+
+  // Exemple d'appel sur un tableau 'classique' de float
+  std::array<float, 5> arrayFloat{1.2f, 3.4f, 5.6f, 7.8f, 9.0f};
+  std::cout << "La valeur 7.8 est-elle présente dans le tableau de float ? "
+            << std::bool
+alpha << estPresent(arrayFloat.cbegin(), arrayFloat.cend(), 7.8f) << std::endl;
+
+return 0;
+}
